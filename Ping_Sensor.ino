@@ -1,5 +1,6 @@
 
-const int pingPin = 7;
+
+const int UltraSonic = 11;
 
 void setup() {
   Serial.begin(9600);
@@ -7,25 +8,23 @@ void setup() {
 
 void loop() {
 
-  long duration, inches, cm;
+  long duration, cm;
+  pinMode(UltraSonic, OUTPUT);
 
-
-  pinMode(pingPin, OUTPUT);
-  digitalWrite(pingPin, LOW);
+  
+  digitalWrite(UltraSonic, LOW);
   delayMicroseconds(2);
-  digitalWrite(pingPin, HIGH);
+  digitalWrite(UltraSonic, HIGH);
   delayMicroseconds(5);
-  digitalWrite(pingPin, LOW);
+  digitalWrite(UltraSonic, LOW);
 
 
-  pinMode(pingPin, INPUT);
-  duration = pulseIn(pingPin, HIGH);
+  pinMode(UltraSonic, INPUT);
+  duration = pulseIn(UltraSonic, HIGH);
 
-  inches = microsecondsToInches(duration);
   cm = microsecondsToCentimeters(duration);
 
-  Serial.print(inches);
-  Serial.print("in, ");
+  //prints the output of the ultrasonic 
   Serial.print(cm);
   Serial.print("cm");
   Serial.println();
@@ -33,14 +32,6 @@ void loop() {
   delay(100);
 }
 
-long microsecondsToInches(long microseconds) {
-  // According to Parallax's datasheet for the PING))), there are 73.746
-  // microseconds per inch (i.e. sound travels at 1130 feet per second).
-  // This gives the distance travelled by the ping, outbound and return,
-  // so we divide by 2 to get the distance of the obstacle.
-  // See: http://www.parallax.com/dl/docs/prod/acc/28015-PING-v1.3.pdf
-  return microseconds / 74 / 2;
-}
 
 long microsecondsToCentimeters(long microseconds) {
   // The speed of sound is 340 m/s or 29 microseconds per centimeter.
