@@ -10,6 +10,7 @@ void loop() {
 
   long duration, cm;
   pinMode(UltraSonic, OUTPUT);
+  //does this work?
 
   
   digitalWrite(UltraSonic, LOW);
